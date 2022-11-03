@@ -1,18 +1,48 @@
 import React, { useState } from "react";
 import { Container, Card, Button, Modal, Form, Input } from "react-bootstrap";
+import Axios from 'axios';
+
 function App() {
   const [email, setEmail] = useState("");
   const [show, setShow] = useState(false);
   const [telaSim, setTelaSim] = useState('nao');
-  
+  const [token, setToken] = useState('')
+  const [senha, setSenha] = useState('')
+  const [cargo, setCargo] = useState('')
+  const [senhaConfirmada, setSenhaConfirmada] = useState('')
   
   const validar = () => {
-    if (email === "atleta@gmail.com") {
-      return (setShow(true))
+    if (email != null | email != undefined) {
+      Axios.put('http://localhost:3000/recuperarSenha/mandarEmail', {
+        email : email
+      }).then((response) => response.data)
+      .then((response) => {
+        if(response.error === true){
+          alert(response.msg)
+        }
+        else{
+          setCargo(response.tabela)
+          console.log(response)
+        }
+      })
+      return(setShow(true))
+      
     } else {
       return ( window.alert('CPF inválido! Verifique suas credenciais!')) ;
     }
   };
+
+  const redefinir = () => {
+    console.log(cargo)
+    console.log(email)
+    Axios.put('http://localhost:3000/recuperarSenha/verificarCodigo', {
+      codigo : token,
+      senha : senha,
+      email : email,
+      cargo : cargo
+    }).then((response) => response.data)
+    .then((response) => console.log(response))
+  }
 
   return (
     <Container className="mt-5">
@@ -50,16 +80,17 @@ function App() {
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                 
                 <Form.Label>Token:</Form.Label>
-                <Form.Control required placeholder="" />
+                <Form.Control required placeholder="" value = {token} onChange={(e) => setToken(e.target.value)}/>
               </Form.Group>
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                 <Form.Label>Senha:</Form.Label>
-                <Form.Control type="password" required placeholder="" />
+                <Form.Control type="password" required placeholder="" value={senha} onChange={(e) => setSenha(e.target.value)}/>
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                 <Form.Label>Confirmar senha:</Form.Label>
-                <Form.Control type="password" required placeholder="" />
+                <Form.Control type="password" required placeholder="" value={senhaConfirmada} 
+                onChange={(e) => setSenhaConfirmada(e.target.value)} />
               </Form.Group>
               
               
@@ -67,7 +98,7 @@ function App() {
                 <Button variant="secondary" onClick={() => setShow(false)}>
                   Fechar
                 </Button>
-                <Button type="submit" variant="success">
+                <Button variant="success" onClick={redefinir}>
                   Enviar
                 </Button>
               </Modal.Footer>
