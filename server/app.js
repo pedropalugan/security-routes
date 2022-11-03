@@ -13,6 +13,7 @@ const gestorRouter = require('./routes/gestorRoutes');
 const medicoRouter = require('./routes/medicoRoutes');
 const medicoConvRouter = require('./routes/medicoConvRoutes');
 const atletaRouter = require('./routes/atletaRoutes');
+const recuperarSenhaRoutes = require('./routes/recuperarSenhaRoutes')
 
 function GestorAdmin(req, res, next){
     if(req.isAuthenticated()) return next(); //&& user.cargo == "Gestor-Admin" || user.cargo == "Gestor")
@@ -57,6 +58,7 @@ app.use('/', gestorRouter);
 app.use('/medico', Medico, medicoRouter);
 app.use('/medicoConv', MedicoConv, medicoConvRouter);
 app.use('/atleta', Atleta, atletaRouter);
+app.use('/recuperarSenha', recuperarSenhaRoutes)
 
 //Inicializa Servidor
 const port = 3000;
