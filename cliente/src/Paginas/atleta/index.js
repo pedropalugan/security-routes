@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Container, ToggleButton, ButtonGroup, Card } from "react-bootstrap";
 import Exames from "./Exames";
 import AlterarPerfil from "./AlterarPerfil";
 import './styleAtleta.css';
 import Header from '../../componentes/Header/Header';
-import Footer from '../../componentes/Footer/Footer';
+import { UserContext }  from "../login";
 
 const Medico = () => {
+  
+  const context = useContext(UserContext)
+
   const [activeTab, setActiveTab] = useState("tab1");
 
   const botoes = [
@@ -14,7 +17,11 @@ const Medico = () => {
     { name: "Exames", value: "tab2" },
   ];
 
+  console.log(context)
+
   return (
+    <>
+    <Header/>
     <Container className="mt-5">
       <h6 className="fw-normal text-start">Serviços:</h6>
 
@@ -43,6 +50,7 @@ const Medico = () => {
         </Card.Body>
       </Card>
     </Container>
+    </>
   );
 };
 export default Medico;
