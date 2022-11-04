@@ -41,16 +41,15 @@ class gestorControllers{
 
     // -------------------------- LISTAR USUÁRIO --------------------------
     static async listData(req, res){
+        await database.sync()
+        try{
+            await atletaModel.findAll({ raw : true}) 
+            .then((user) => res.status(200).json(user))
+        }
+        catch(err){
+            res.send("ERRO SEU BURRO")
+        }
 
-        let array = perfil[req.body.cargo]; 
-        let array2 = [];
-
-        (async function(){
-            for (const elemento of array) {
-                array2.push(await elemento.findAll({raw : true}))
-            };
-            res.status(201).json(array2);
-        })();
     };  
 
     // -------------------------- CRIAR USUÁRIO --------------------------

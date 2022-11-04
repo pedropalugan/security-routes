@@ -17,7 +17,7 @@ const tabela = [atletaModels, gestorAdminModels, gestorAdminModels, gestorModels
 // Class criada para Login
 class loginControllers{
     static async login(req, res){
-        let verification = false
+        let verification = 'false'
         let response = {}
         await database.sync();
         try{
@@ -28,13 +28,14 @@ class loginControllers{
                     break
                 }
                 if(x === tabela.length - 1){
-                    res.status(200).json("O usuário não foi encontrado")
+                    res.send("O usuário não foi encontrado")
                 }
             }
             if(response){
+                console.log(response)
                 bcrypt.compare(req.body.senha, response.senha, (err, data) => {
                     if(data) { 
-                        verification = true
+                        verification = 'true'
                         res.status(200).json({msg : "SUCESSO", cargo : response.cargo, auth : verification})
                     }
                     if(err){

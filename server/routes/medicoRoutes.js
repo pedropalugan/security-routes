@@ -10,8 +10,6 @@ const router = express.Router(); // Armazena o "Router" do express
 router
     .get('/', medicoControllers.listAtlhetePending)
     .get('/solicited', medicoControllers.listAtlheteSolicited)
-    .put('/recuperarSenha', medicoControllers.recuperarSenha)
-    .put('/verificarCodigo', medicoControllers.verifyCode)
     .post('/solicitarExame', medicoControllers.solicitarExame)
     .get('/verExameEnviado/:id_atleta', medicoControllers.verExameEnviado)
     .put('/avaliarExame/:idexame', medicoControllers.avaliarExame)
