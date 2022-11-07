@@ -15,36 +15,35 @@ const tabela = [atletaModels, gestorAdminModels, gestorAdminModels, gestorModels
 
 
 // Class criada para Login
-class loginControllers{
-    static async login(req, res){
+class loginControllers {
+    static async login(req, res) {
         let verification = 'false'
         let response = {}
         await database.sync();
-        try{
-            for(let x = 0; x < tabela.length; x++){
-                let request = await tabela[x].findOne({raw : true, where : {email : req.body.email}})
-                if(request){
+        try {
+            for (let x = 0; x < tabela.length; x++) {
+                let request = await tabela[x].findOne({ raw: true, where: { email: req.body.email } })
+                if (request) {
                     response = request
                     break
                 }
-                if(x === tabela.length - 1){
+                if (x === tabela.length - 1) {
                     res.send("O usuário não foi encontrado")
                 }
             }
-            if(response){
-                console.log(response)
+            if (response) {
                 bcrypt.compare(req.body.senha, response.senha, (err, data) => {
-                    if(data) { 
+                    if (data) {
                         verification = 'true'
-                        res.status(200).json({msg : "SUCESSO", cargo : response.cargo, auth : verification})
+                        res.status(200).json({ msg: "SUCESSO", cargo: response.cargo, auth: verification })
                     }
-                    if(err){
-                        res.status(200).json({msg : "SENHA INCORRETA", auth: verification})
+                    if (data === false) {
+                        res.status(200).json({ msg: "SENHA INCORRETA", auth: verification })
                     }
                 })
             }
         }
-        catch(err){
+        catch (err) {
 
         }
     };

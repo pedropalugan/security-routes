@@ -55,9 +55,9 @@ app.use(express.static(path.join(__dirname, 'download')));
 //Rotas
 app.use('/login', loginRouter);
 app.use('/', gestorRouter);
-app.use('/medico', Medico, medicoRouter);
-app.use('/medicoConv', MedicoConv, medicoConvRouter);
-app.use('/atleta', Atleta, atletaRouter);
+app.use('/medico', medicoRouter);
+app.use('/medicoConv', medicoConvRouter);
+app.use('/atleta', atletaRouter);
 app.use('/recuperarSenha', recuperarSenhaRoutes)
 
 //Inicializa Servidor
