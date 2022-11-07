@@ -1,18 +1,17 @@
-import React, { useState, createContext } from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import login from '../../assets/atleta.png';
 import Sesi from '../../assets/logo2.jpg';
 import './style.css';
-
+import { createContext } from 'react';
 import Axios from "axios";
 import { Button } from 'react-bootstrap';
 
-export const UserContext = createContext();
+export const UserContext = createContext()
 
-function Login({ children }) {
+function Login() {
   const [emailAccount, setEmail] = useState("")
   const [pswd, setPassword] = useState("")
-
   const [auth, setAuth] = useState('false')
 
   function handleLogin() {
@@ -20,19 +19,14 @@ function Login({ children }) {
       email: emailAccount,
       senha: pswd
     }).then((response) => {
-      setAuth(response.data.auth)
-      alert(response.data.auth)
-      if (response.data.msg === "SUCESSO") window.location.href = `${response.data.cargo.toLowerCase()}`
-      else alert('Senha ou email incorretos')
+      if (response.data.msg === "SUCESSO") window.location.href = `${response.data.cargo}`
+      else alert('ajnsdjkasd')
     })
   };
 
 
   return (
-    <div>
-      <UserContext.Provider value={{auth, setAuth}}>
-        {children}
-      </UserContext.Provider>
+    <UserContext.Provider value='akjsdakljsdasljkd'>
       <div className="container-login">
         <div className="img-box">
           <img src={login} alt="teste" />
@@ -74,7 +68,7 @@ function Login({ children }) {
           </div>
         </div>
       </div>
-    </div>
+    </UserContext.Provider >
   )
 }
 

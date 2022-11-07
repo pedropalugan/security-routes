@@ -4,11 +4,11 @@ import Exames from "./Exames";
 import AlterarPerfil from "./AlterarPerfil";
 import './styleAtleta.css';
 import Header from '../../componentes/Header/Header';
-import { UserContext }  from "../login";
+import { UserContext } from "../login";
+
+
 
 const Medico = () => {
-  
-  const context = useContext(UserContext)
 
   const [activeTab, setActiveTab] = useState("tab1");
 
@@ -17,7 +17,8 @@ const Medico = () => {
     { name: "Exames", value: "tab2" },
   ];
 
-  console.log(context)
+  console.log(UserContext)
+
 
   return (
     <>
