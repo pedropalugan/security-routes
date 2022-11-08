@@ -156,7 +156,7 @@ const NavManu = styled.ul`
 
 
 
-const Header = () => {
+const Header = (props) => {
   const [isToggleOpen, setIsToggleOpen] = useState(false);
 
   const handleToggleOpen = () => {
@@ -173,8 +173,8 @@ const Header = () => {
               <img src={Profile} alt="logo" width="55px" height="57px" />
             </div>
             <div className="title">
-              <h2>Rodrigo Silva </h2>
-              <p>Perfil : gestor</p>
+              <h2>{props.nome}</h2>
+              <p>Perfil : {props.cargo}</p>
             </div>
 
             <div className="icons">

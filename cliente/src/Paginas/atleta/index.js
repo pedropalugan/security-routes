@@ -1,14 +1,28 @@
-import React, { useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, ToggleButton, ButtonGroup, Card } from "react-bootstrap";
 import Exames from "./Exames";
 import AlterarPerfil from "./AlterarPerfil";
 import './styleAtleta.css';
 import Header from '../../componentes/Header/Header';
-import { UserContext } from "../login";
-
-
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 const Medico = () => {
+
+  const { email } = useParams()
+
+  const [nome, setNome] = useState('')
+  const [cargo, setCargo] = useState('')
+
+  useEffect(() => {
+    axios.post('http://localhost:3000/atleta/', {
+      email : email
+    }).then((response) => response.data)
+    .then((response) => {
+      setNome(response.nome)
+      setCargo(response.cargo)
+    })
+  }, [])
 
   const [activeTab, setActiveTab] = useState("tab1");
 
@@ -17,12 +31,11 @@ const Medico = () => {
     { name: "Exames", value: "tab2" },
   ];
 
-  console.log(UserContext)
 
 
   return (
     <>
-    <Header/>
+    <Header nome={nome} cargo={cargo}/>
     <Container className="mt-5">
       <h6 className="fw-normal text-start">Serviços:</h6>
 
