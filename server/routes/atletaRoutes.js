@@ -19,7 +19,7 @@ const upload = multer({storage})
 const router = express.Router()
 
 router
-    .get('/', atletaControllers.listUsers)
+    .post('/', atletaControllers.listUsers)
     .put('/atualizarAtleta', atletaControllers.changeUser)
     .get('/verExamesSolicitados/:id_atleta', atletaControllers.viewFile)
     .put('/enviarPdf/:id_atleta', upload.single('pdf'), atletaControllers.sendPdf)

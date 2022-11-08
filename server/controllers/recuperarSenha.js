@@ -37,8 +37,8 @@ class recuperarSenhaControllers {
                 array = array.join("") //transforma em string
 
                 let testAccount = {
-                    user: 'pedro.palugan@senaisp.edu.br',
-                    pass: 'Peppalugan12'
+                    user: 'thiagomessias411@outlook.com',
+                    pass: 'Thiago2004'
                 }
 
 

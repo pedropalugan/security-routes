@@ -15,7 +15,7 @@ class atletaControllers{
     // -------------------------- LISTAR DADOS DO USUÁRIO --------------------------
     static async listUsers(req, res){
         await database.sync(); // Conexão com o banco de dados
-        let data = await atletaModels.findAll({raw : true}); // Listar dados sobre ele mesmo
+        let data = await atletaModels.findOne({raw : true , where:{email : req.body.email}, attributes:['nome', 'cargo']}); // Listar dados sobre ele mesmo
         res.status(200).json(data); // Resposta para o usuário
     };
 

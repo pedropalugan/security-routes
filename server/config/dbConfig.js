@@ -2,7 +2,7 @@
 const Sequelize = require('sequelize'); // Vai receber o sequelize
 
 // Conectar com banco de dados
-const database = new Sequelize('projsaude','root','',{
+const database = new Sequelize('sesi','root','Senai115',{
     dialect: 'mysql',
     host:'localhost',
     port: 3306,
