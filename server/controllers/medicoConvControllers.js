@@ -6,6 +6,7 @@ const database = require('../config/dbConfig')
 
 const examesModels = require('../models/exameModels')
 const atletaModels = require('../models/atletaModels')
+const medicoConvModels = require('../models/medicoConvModels')
 
 class medicoConvControllers {
 
@@ -40,6 +41,14 @@ class medicoConvControllers {
         catch (err) {
             res.send({ msg: "Não foi possível acessar o servidor" })
         }
+    }
+
+    static async verMedicoConv(req, res){
+        let email = req.params.email
+        await database.sync()
+        await medicoConvModels.findOne({where:{email : email}})
+        .then((response) => res.send(response))
+        .catch((err) => res.send(err))
     }
 
 }

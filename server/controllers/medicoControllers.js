@@ -99,6 +99,14 @@ class medicoControllers {
         }
     }
 
+    static async verMedico(req, res){
+        let email = req.params.email
+        await database.sync()
+        await medicoModels.findOne({where : {email: email}})
+        .then((response) => res.status(200).json(response))
+        .catch((err) => res.send(err))
+    }
+
 }
 
 

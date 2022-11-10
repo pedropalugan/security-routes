@@ -17,5 +17,7 @@ router
 
   .put('/solicitarAtleta', gestorControllers.requestAthlete)
 
+  .get('/verGestor/:email', gestorControllers.verGestor)
+
 // Exportação do módulo
 module.exports = router  

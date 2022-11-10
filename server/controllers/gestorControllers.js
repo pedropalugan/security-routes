@@ -317,6 +317,14 @@ class gestorControllers{
         res.send({msg : "Houve um erro interno, tente novamente mais tarde"});
     };
 };
+
+    static async verGestor(req, res){
+        let email = req.params.email
+        await database.sync();
+        await gestorModels.findOne({where:{email : email}})
+        .then((response) => res.status(200).json(response))
+        .catch((err) => res.send(err))
+    }
 };
 
 // Exportar módulos

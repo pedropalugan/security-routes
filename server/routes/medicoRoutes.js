@@ -13,5 +13,6 @@ router
     .post('/solicitarExame', medicoControllers.solicitarExame)
     .get('/verExameEnviado/:id_atleta', medicoControllers.verExameEnviado)
     .put('/avaliarExame/:idexame', medicoControllers.avaliarExame)
+    .get('/verMedico/:email', medicoControllers.verMedico)
 // Exportação do módulo
 module.exports = router  
