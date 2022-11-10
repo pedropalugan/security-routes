@@ -19,7 +19,8 @@ function Login() {
       if (response.data.msg === "SUCESSO") {
         response.data.cargo = response.data.cargo.toLowerCase()
         let cargo = response.data.cargo.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-         window.location.href = `${cargo}/${emailAccount}`;
+        console.log(cargo)
+        window.location.href = `${cargo}/${emailAccount}`;
       } else alert("Senha ou email incorretos");
     });
   }

@@ -1,14 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, ToggleButton, ButtonGroup, Card } from "react-bootstrap";
 // import './styleAtleta.css';
+
+import { useParams } from 'react-router-dom'
+import axios from 'axios';
+
 import Solicitar from "./Solicitar/Solicitar"
 import Visualizar from "./Visualizar/Visualizar";
 import Cadastrar from "./Cadastro/Cadastrar";
 import Atualizar from "./Atualizar/Atualizar";
 import Deletar from "./Deletar/Deletar";
 
+import Header from "../../componentes/Header/Header";
+
 const Medico = () => {
   const [activeTab, setActiveTab] = useState("tab1");
+
+  const { email } = useParams()
+
+  const [nome, setNome] = useState('')
+  const [cargo, setCargo] = useState('')
 
   const botoes = [
     { name: "Solicitar", value: "tab1" },
@@ -18,7 +29,18 @@ const Medico = () => {
     { name: "Deletar", value: "tab5" },
   ];
 
+  useEffect(() => {
+    axios.get(`http://localhost:3000/verGestor/${email}`)
+    .then((response) => response.data)
+    .then((response) => {
+      setNome(response.nome)
+      setCargo(response.cargo)
+    })
+  }, [] )
+
   return (
+    <>
+    <Header nome={nome} cargo={cargo}/>
     <Container className="mt-5">
       <h6 className="fw-normal text-start">Serviços:</h6>
       <ButtonGroup className="w-25">
@@ -49,6 +71,7 @@ const Medico = () => {
         </Card.Body>
       </Card>
     </Container>
+    </>
   );
 };
 export default Medico;

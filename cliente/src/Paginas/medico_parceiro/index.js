@@ -1,15 +1,35 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, ToggleButton, ButtonGroup, Card } from "react-bootstrap";
 import AvalicacoesRecebidas from "./AvalicacoesRecebidas";
+import Header from '../../componentes/Header/Header'
+import { useParams } from 'react-router-dom';
+
+import axios from "axios"
 
 const Medico = () => {
   const [activeTab, setActiveTab] = useState("tab1");
+
+  const { email } = useParams()
+
+  const [nome, setNome] = useState('')
+  const [cargo, setCargo] = useState('')
 
   const botoes = [
     { name: "Avalicações Recebidas", value: "tab2" },
   ];
 
+  useEffect(() => {
+    axios.get(`http://localhost:3000/medicoConv/verMedicoConv/${email}`)
+    .then((response) => response.data)
+    .then((response) =>{
+      setNome(response.nome)
+      setCargo(response.cargo)
+    })
+  }, [])
+
   return (
+    <>
+    <Header nome={nome} cargo={cargo}/>
     <Container className="mt-5">
       <h6 className="fw-normal text-start">Serviços:</h6>
 
@@ -38,6 +58,7 @@ const Medico = () => {
         </Card.Body>
       </Card>
     </Container>
+    </>
   );
 };
 export default Medico;

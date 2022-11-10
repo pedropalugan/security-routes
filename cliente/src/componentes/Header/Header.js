@@ -173,7 +173,9 @@ const Header = (props) => {
               <img src={Profile} alt="logo" width="55px" height="57px" />
             </div>
             <div className="title">
-              <h2>{props.nome}</h2>
+              <h2 style={{
+                fontSize : 20,
+              }}>{props.nome}</h2>
               <p>Perfil : {props.cargo}</p>
             </div>
 

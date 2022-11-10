@@ -19,7 +19,7 @@ const Rotas = () => (
       <Route exact path="/atleta/:email" element={<Atleta />} />
       <Route exact path="/medico/:email" element={<Medico />} />
       <Route exact path="/gestor/:email" element={<Gestor />} />
-      <Route exact path="/médico parceiro/:email" element={<MedicoParceiro />} />
+      <Route exact path="/medico-convidado/:email" element={<MedicoParceiro />} />
     </Routes>
     <Footer />
   </BrowserRouter>
