@@ -40,7 +40,6 @@ function AvalicacoesRecebidas({ atleta }) {
       </thead>
       <tbody>
         {nomes.map((nomes, index) => {
-          console.log(cpf[index])
           return(
             <tr>
               <td>{nomes}</td>
