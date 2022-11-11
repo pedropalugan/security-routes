@@ -7,5 +7,7 @@ Router
     .get("/verExames/:idMedConv", medicoConvControllers.verExame)
     .put("/avaliarExames/:idMedConv", medicoConvControllers.avaliarExame)
     .get("/verMedicoConv/:email", medicoConvControllers.verMedicoConv)
+    .get("/verSolicitacoes/:email", medicoConvControllers.verSolicitacoes)
+    .post("/verAtletas", medicoConvControllers.getAtletas)
 
 module.exports = Router

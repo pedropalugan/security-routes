@@ -51,6 +51,47 @@ class medicoConvControllers {
         .catch((err) => res.send(err))
     }
 
+    static async verSolicitacoes (req, res){
+        let email = req.params.email
+        let arrayExames = []
+        let arrayAtleta = []
+        await database.sync()
+        await medicoConvModels.findAll({ raw : true, where:{email:email}})
+        .then((request) => {
+            for(let x = 0; x < request.length; x++){
+                arrayExames.push(request[x]['id_exame_conv'])
+            }
+            for(let y = 0; y < arrayExames.length; y++){
+                examesModels.findOne({raw : true, where:{idexame : arrayExames[y]}})
+                .then((response) => {
+                    arrayAtleta.push(response.id_exame_atl)
+                    if(y === request.length - 1) res.status(200).json(arrayAtleta)
+                })
+            }
+        })
+    }
+
+    static async getAtletas(req, res){
+        await database.sync()
+        let arrayNome = []
+        let arrayCpf = []
+        let arrayRelacao = []
+        let arrayJustificativa = []
+        for(let x in req.body.atletas){
+            await atletaModels.findOne({raw : true, where:{idatleta : req['body']['atletas'][x]}})
+            .then((response) => {
+                arrayNome.push(response.nome)
+                arrayRelacao.push(response.situacao)
+                arrayCpf.push(response.cpf)
+            })
+        }
+        res.status(200).json({
+            nomes : arrayNome,
+            relacao : arrayRelacao,
+            cpf : arrayCpf
+        })
+    }
+
 }
 
 module.exports = medicoConvControllers
