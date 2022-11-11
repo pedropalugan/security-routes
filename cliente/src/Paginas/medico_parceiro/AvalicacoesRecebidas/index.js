@@ -7,6 +7,10 @@ import axios from 'axios';
 function AvalicacoesRecebidas({ atleta }) {
 
   const [validar, setValidar] = useState(false)
+  
+  const [nomes, setNomes] = useState([])
+  const [cpf, setCpf] = useState([])
+  const [situacao, setSituacao] = useState([])
 
 
   useEffect(() => {
@@ -14,7 +18,11 @@ function AvalicacoesRecebidas({ atleta }) {
       atletas : atleta
     })
     .then((response) => response.data)
-    .then((response) => console.log(response))
+    .then((response) => {
+      setNomes(response['nomes'])
+      setSituacao(response['relacao'])
+      setCpf(response['cpf'])
+    })
   }, [atleta])
 
   return (
@@ -31,10 +39,15 @@ function AvalicacoesRecebidas({ atleta }) {
         </tr>
       </thead>
       <tbody>
-        {atleta.map((atleta, index) => {
+        {nomes.map((nomes, index) => {
+          console.log(cpf[index])
           return(
             <tr>
-              <td>{atleta}</td>
+              <td>{nomes}</td>
+              <td>{cpf[index]}</td>
+              <td>{situacao[index]}</td>
+              <td></td>
+              <td></td>
             </tr>
           )
         })}
