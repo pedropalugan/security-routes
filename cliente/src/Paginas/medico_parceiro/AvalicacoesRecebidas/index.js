@@ -1,11 +1,21 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './table.css';
 import { Button, Table } from 'react-bootstrap';
 import ExamesEnviados from '../ExamesEnviados'
+import axios from 'axios';
 
-function AvalicacoesRecebidas() {
+function AvalicacoesRecebidas({ atleta }) {
 
   const [validar, setValidar] = useState(false)
+
+
+  useEffect(() => {
+    axios.post('http://localhost:3000/medicoConv/verAtletas', {
+      atletas : atleta
+    })
+    .then((response) => response.data)
+    .then((response) => console.log(response))
+  }, [atleta])
 
   return (
     <>
@@ -21,25 +31,13 @@ function AvalicacoesRecebidas() {
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>Atleta1</td>
-          <td>111.111.111-11</td>
-          <td>Aprovado</td>
-          <td> </td>
-          <td><Button variant="success" onClick={setValidar}>Visualizar</Button></td>
-        </tr>
-        <tr>
-          <td>Atleta2</td>
-          <td>111.111.111-11</td> 
-          <td>Reprovado</td>
-          <td> </td>
-        </tr>
-        <tr>
-          <td>Atleta2</td>
-          <td>111.111.111-11</td> 
-          <td>Reprovado</td>
-          <td> </td>
-        </tr>
+        {atleta.map((atleta, index) => {
+          return(
+            <tr>
+              <td>{atleta}</td>
+            </tr>
+          )
+        })}
       </tbody>
     </Table>
     </>)

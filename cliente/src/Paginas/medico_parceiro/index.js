@@ -7,12 +7,14 @@ import { useParams } from 'react-router-dom';
 import axios from "axios"
 
 const Medico = () => {
+
   const [activeTab, setActiveTab] = useState("tab1");
 
   const { email } = useParams()
 
   const [nome, setNome] = useState('')
   const [cargo, setCargo] = useState('')
+  const [atletas, setAtletas] = useState([])
 
   const botoes = [
     { name: "Avalicações Recebidas", value: "tab2" },
@@ -25,7 +27,16 @@ const Medico = () => {
       setNome(response.nome)
       setCargo(response.cargo)
     })
+    verSolicitacoes()
   }, [])
+
+  function verSolicitacoes(){
+    axios.get(`http://localhost:3000/medicoConv/verSolicitacoes/${email}`)
+    .then((response) => response.data)
+    .then((response) => {
+      setAtletas(response)
+    })
+  }
 
   return (
     <>
@@ -54,7 +65,7 @@ const Medico = () => {
       <Card className="mt-3">
         <Card.Body>
           {/* {activeTab === "tab1" && <AvalicacoesRecebidas />} */}
-          <AvalicacoesRecebidas />
+          <AvalicacoesRecebidas atleta={atletas} />
         </Card.Body>
       </Card>
     </Container>
