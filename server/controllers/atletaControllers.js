@@ -46,7 +46,7 @@ class atletaControllers{
                 id_exame_atl : id_atleta
             }
         }); // Request que vai permitir a visualização dos exames
-        res.status(200).json({request}); // Resposta Final
+        res.status(200).json(request); // Resposta Final
     };
 
     // -------------------------- ENVIAR EXAMES --------------------------

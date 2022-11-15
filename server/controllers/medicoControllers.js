@@ -66,7 +66,7 @@ class medicoControllers {
                 }
             })
             fs.writeFileSync(path.join(__dirname, '../download/' + request[0]['idexame'] + '.pdf'), request[0]['pdf'])
-            res.status(200).json({ msg: `http:localhost:3000/${request[0]['idexame']}.pdf` })
+            res.status(200).json({ msg: `http://localhost:3000/${request[0]['idexame']}.pdf`, id: request[0]['idexame']})
         }
         catch (err) {
             res.send({ msg: "Não foi possível acessar o servidor" })
