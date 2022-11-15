@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+ import React, { useState, useEffect } from "react";
 import { Container, ToggleButton, ButtonGroup, Card } from "react-bootstrap";
 import AvalicacoesRecebidas from "./AvalicacoesRecebidas";
 import Header from '../../componentes/Header/Header'

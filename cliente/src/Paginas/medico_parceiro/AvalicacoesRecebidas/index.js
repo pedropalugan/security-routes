@@ -6,11 +6,13 @@ import axios from 'axios';
 
 function AvalicacoesRecebidas({ atleta }) {
 
+  console.log(atleta)
   const [validar, setValidar] = useState(false)
   
   const [nomes, setNomes] = useState([])
   const [cpf, setCpf] = useState([])
   const [situacao, setSituacao] = useState([])
+  const [index, setIndex] = useState('')
 
 
   useEffect(() => {
@@ -27,7 +29,7 @@ function AvalicacoesRecebidas({ atleta }) {
 
   return (
     <>
-      {validar ? (<ExamesEnviados />) : (<>
+      {validar ? (<ExamesEnviados atleta={index}/>) : (<>
        <Table responsive striped bordered hover >
       <thead>
         <tr className="bg-tabela text-white" >
@@ -46,7 +48,10 @@ function AvalicacoesRecebidas({ atleta }) {
               <td>{cpf[index]}</td>
               <td>{situacao[index]}</td>
               <td></td>
-              <td></td>
+              <td><Button onClick={() => {
+                setIndex(atleta[index])
+                setValidar(true)
+              }} variant='success'>Ver Exame</Button></td>
             </tr>
           )
         })}

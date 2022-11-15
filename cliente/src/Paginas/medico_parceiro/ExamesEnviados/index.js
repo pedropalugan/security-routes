@@ -1,26 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './table.css';
 import { Button, Table, Modal, Form, Container } from 'react-bootstrap';
-import {saveAs} from 'file-saver';
+import { saveAs } from 'file-saver';
+import Axios from 'axios'
 
-function Tabela() {
+function Tabela({ atleta }) {
+
+
+  useEffect(() => {
+    Axios.get(`http://localhost:3000/medico/verExameEnviado/${atleta}`)
+      .then((response) => response.data)
+      .then((response) => {
+        setDownload(response.msg)
+        setIdExame(response.id)
+      })
+  }, [])
+
 
   const [show, setShow] = useState(false);
   const [telaSim, setTelaSim] = useState('nao');
+  const [situacao, setSituacao] = useState('');
+  const [idexame, setIdExame] = useState('')
 
-  const [download,setDownload] = useState('https://avatars.githubusercontent.com/u/91327153?v=4')
+
+
+  const [download, setDownload] = useState('')
 
 
 
-  function clica(){
+  function clica() {
 
-   window.alert(download)
+    window.alert(download)
 
   }
-
-
-
-  function downloadFile(){
+  function downloadFile() {
 
     saveAs(download);
 
@@ -28,6 +41,13 @@ function Tabela() {
 
   function validar() {
     setShow(true)
+  }
+
+  function avaliar() {
+    Axios.put(`http://localhost:3000/medico/avaliarExame/${idexame}`, {
+      situacao : situacao
+    }).then((response) => response.data)
+    .then((response) => alert(response.msg))
   }
 
   return (
@@ -45,10 +65,6 @@ function Tabela() {
               <td><Button variant="success" size="sm" onClick={downloadFile}>Mark.pdf</Button></td>
               <td><Button variant="success" size="sm" onClick={validar}>Validar</Button></td>
             </tr>
-            <tr>
-              <td><Button variant="success" size="sm" onClick={downloadFile}>Jacob.pdf</Button></td>
-              <td><Button variant="success" size="sm" onClick={validar}>Validar</Button></td>
-            </tr>
           </tbody>
         </Table>
         <Modal show={show} onHide={() => setShow(false)}>
@@ -59,17 +75,11 @@ function Tabela() {
             <Form onSubmit={{}}>
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                 <Form.Label>Registre sua avaliação:</Form.Label>
-                {/* <Form.Control
-                type="text"
-                placeholder=""
-                // value={produto}
-                // onChange={(e) => {setProduto(e.target.value);}}
-                required
-                autoFocus
-              /> */}
                 <div className='divButtons'>
-                  <Button variant="success" className="ms-3">Aprovado</Button>
-                  <Button variant="danger" className="ms-3">Reprovado</Button>
+                  <Button variant="success" className="ms-3"
+                    onClick={() => setSituacao("APROVADO")}>Aprovado</Button>
+                  <Button variant="danger" className="ms-3"
+                    onClick={() => setSituacao("REPROVADO")}>Reprovado</Button>
                 </div>
               </Form.Group>
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
@@ -110,7 +120,7 @@ function Tabela() {
                 <Button variant="secondary" onClick={() => setShow(false)}>
                   Fechar
                 </Button>
-                <Button type="submit" variant="success">
+                <Button onClick={avaliar} type="submit" variant="success">
                   Enviar
                 </Button>
               </Modal.Footer>
